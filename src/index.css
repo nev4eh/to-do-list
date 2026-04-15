@@ -1,32 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f7f7f7;
+}
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+h1 {
+  margin-bottom: 10px;
+}
 
-@layer base {
-  :root {
-    --font-heading: 'Playfair Display', serif;
-    --font-body: 'Inter', sans-serif;
-    --background: 0 0% 4%;
-    --foreground: 43 80% 65%;
-    --card: 0 0% 7%;
-    --card-foreground: 43 80% 65%;
-    --popover: 0 0% 9%;
-    --popover-foreground: 43 80% 65%;
-    --primary: 43 80% 55%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 43 80% 65%;
-    --muted: 0 0% 14%;
-    --muted-foreground: 43 20% 50%;
-    --accent: 43 60% 20%;
-    --accent-foreground: 43 80% 70%;
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 18%;
-    --input: 43 20% 15%;
-    --ring: 43 80% 55%;
-    --radius: 0.75rem;
-  }
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+form {
+  margin-top: 10px;
+}
+
+input[type="text"] {
+  padding: 5px;
+  margin-right: 5px;
+}
+
+button {
+  padding: 5px 10px;
 }
