@@ -1,56 +1,50 @@
-import { Toaster } from "@components/ui/toaster"
-import { QueryClientProvider } from "@tanstack/react-query"
-import { queryClientInstance } from "@/lib/query-client"
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import PageNotFound from './lib/PageNotFound'
-import { AuthProvider, useAuth } from '@/lib/AuthContext'
-import UserNotRegisteredError from '@/components/UserNotRegisteredError'
-import Tasks from './pages/Tasks'
-// Add page imports here
+import React, { useState } from 'react';
 
-const AuthenticatedApp = () => {
-  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth()
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
 
-  // Show loading spinner while checking app public settings or auth
-  if (isLoadingPublicSettings || isLoadingAuth) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
-      </div>
-    )
-  }
-
-  // Handle authentication errors
-  if (authError) {
-    if (authError.type === 'user_not_registered') {
-      return <UserNotRegisteredError />
-    } else if (authError.type === 'auth_required') {
-      // Redirect to login automatically
-      navigateToLogin()
-      return null
+  function addTask(e) {
+    e.preventDefault();
+    if (newTask.trim() !== '') {
+      setTasks([...tasks, { text: newTask, completed: false }]);
+      setNewTask('');
     }
   }
 
-  // Render the main app
+  function toggleTask(index) {
+    const updatedTasks = tasks.map((task, i) =>
+      i === index ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  }
+
   return (
-    <Routes>
-      <Route path="/" element={<Tasks />} />
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
-  )
+    <div className="container">
+      <h1>To-Do List</h1>
+      <form onSubmit={addTask}>
+        <input
+          type="text"
+          value={newTask}
+          placeholder="Enter a task"
+          onChange={(e) => setNewTask(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
+      <ul>
+        {tasks.map((task, index) => (
+          <li
+            key={index}
+            onClick={() => toggleTask(index)}
+            style={{ textDecoration: task.completed ? 'line-through' : 'none', cursor: 'pointer' }}
+          >
+            {task.text}
+          </li>
+        ))}
+      </ul>
+      <p>Click a task to mark it as completed.</p>
+    </div>
+  );
 }
 
-function App() {
-  return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <AuthenticatedApp />
-        </Router>
-        <Toaster />
-      </QueryClientProvider>
-    </AuthProvider>
-  )
-}
-
-export default App
+export default App;
