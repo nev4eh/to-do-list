@@ -4,11 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-Do List</title>
-  <!-- Include React and ReactDOM from CDN -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <!-- Include Babel for JSX transformation in the browser -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -44,7 +41,7 @@
 </head>
 <body>
   <div id="root"></div>
-  <script type="text/babel">
+  <script>
     function App() {
       const [tasks, setTasks] = React.useState([]);
       const [newTask, setNewTask] = React.useState('');
@@ -52,7 +49,7 @@
       const addTask = (e) => {
         e.preventDefault();
         if (newTask.trim() !== '') {
-          setTasks([...tasks, { text: newTask, completed: false }]);
+          setTasks(tasks.concat({ text: newTask, completed: false }));
           setNewTask('');
         }
       };
@@ -64,39 +61,45 @@
         setTasks(updated);
       };
 
-      return (
-        <div>
-          <h1>To-Do List</h1>
-          <form onSubmit={addTask}>
-            <input
-              type="text"
-              value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
-              placeholder="Enter a new task"
-            />
-            <button type="submit">Add</button>
-          </form>
-          <ul>
-            {tasks.map((task, index) => (
-              <li
-                key={index}
-                onClick={() => toggleTask(index)}
-                style={{
+      return React.createElement(
+        'div',
+        null,
+        React.createElement('h1', null, 'To-Do List'),
+        React.createElement(
+          'form',
+          { onSubmit: addTask },
+          React.createElement('input', {
+            type: 'text',
+            value: newTask,
+            onChange: (e) => setNewTask(e.target.value),
+            placeholder: 'Enter a new task'
+          }),
+          React.createElement('button', { type: 'submit' }, 'Add')
+        ),
+        React.createElement(
+          'ul',
+          null,
+          tasks.map((task, index) =>
+            React.createElement(
+              'li',
+              {
+                key: index,
+                onClick: () => toggleTask(index),
+                style: {
                   textDecoration: task.completed ? 'line-through' : 'none',
-                  cursor: 'pointer',
-                }}
-              >
-                {task.text}
-              </li>
-            ))}
-          </ul>
-          <p>Click a task to mark it as completed.</p>
-        </div>
+                  cursor: 'pointer'
+                }
+              },
+              task.text
+            )
+          )
+        ),
+        React.createElement('p', null, 'Click a task to mark it as completed.')
       );
     }
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    root.render(React.createElement(App));
   </script>
 </body>
 </html>
