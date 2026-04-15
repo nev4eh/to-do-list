@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --background: 0 0% 4%;
+    --foreground: 43 80% 65%;
+    --card: 0 0% 7%;
+    --card-foreground: 43 80% 65%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 43 80% 65%;
+    --primary: 43 80% 55%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 43 80% 65%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 43 20% 50%;
+    --accent: 43 60% 20%;
+    --accent-foreground: 43 80% 70%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 43 20% 15%;
+    --ring: 43 80% 55%;
+    --radius: 0.75rem;
+  }
+}
